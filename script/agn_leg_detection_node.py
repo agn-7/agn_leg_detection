@@ -120,7 +120,7 @@ class LegDetection(object):
         
         m.pose.position.x = x
         m.pose.position.y = y
-        m.pose.position.z = 0
+        m.pose.position.z = -0.6
         
         m.pose.orientation.x = 0
         m.pose.orientation.y = 0
@@ -399,13 +399,13 @@ class LegDetection(object):
                 while j < len(angle[i]) - 1:
                     cmp3 = cmp3 + 1
                                      
-                    if (abs(angle[i][j] - angle[i][j + 1]) < 25) and \
-                            (abs(angle[i][j] - self.threshold_angle) < 25):
+                    if (abs(angle[i][j] - angle[i][j + 1]) < 50) and \
+                            (abs(angle[i][j] - self.threshold_angle) < 50):
                         print('matchhhhhhhhhhhhh')
                         cmp2 = cmp2 + 1  # increase match counter
                                                 
                     if ((len(angle) - cmp3) == 0) and \
-                            (abs(angle[i][j + 1] - self.threshold_angle) < 25):  # baraye inke zaviye akhar ham barresi shavad
+                            (abs(angle[i][j + 1] - self.threshold_angle) < 50):  # baraye inke zaviye akhar ham barresi shavad
                         print('mathchhhhhhhhhh22')
                         cmp2 = cmp2 + 1  # increase match counter
                                                                                                                                           
@@ -428,7 +428,6 @@ class LegDetection(object):
             k = -1
                     
             while i < len(curv) - 1:
-                print(11111111111111111111111)
                 end1 = len(clustersPoints[curv_indexes[i]]) - 1
                 end2 = len(clustersPoints[curv_indexes[i + 1]]) - 1                                         
                 a = ((clustersPoints[curv_indexes[i + 1]][0]) - (clustersPoints[curv_indexes[i]][end1]))
@@ -591,21 +590,21 @@ class LegDetection(object):
                 while j < len(angle11[i]) - 1:
                     cmp3 = cmp3 + 1                
                     #  TODO :: all 50(s) was 25 and 50.0%(s) was 30.0%
-                    if (abs(angle11[i][j] - angle11[i][j + 1]) < 50) and \
-                            (abs(angle11[i][j] - self.threshold_angle) < 50) and \
-                            (abs(angle22[i][j] - angle22[i][j + 1]) < 50) and \
-                            (abs(angle22[i][j] - self.threshold_angle) < 50):
+                    if (abs(angle11[i][j] - angle11[i][j + 1]) < 40) and \
+                            (abs(angle11[i][j] - self.threshold_angle) < 40) and \
+                            (abs(angle22[i][j] - angle22[i][j + 1]) < 40) and \
+                            (abs(angle22[i][j] - self.threshold_angle) < 40):
                         cmp2 = cmp2 + 1                                        
                                                 
                     if ((len(angle11) - cmp3) == 0) and \
-                            (abs(angle11[i][j + 1] - self.threshold_angle) < 50) and \
-                            (abs(angle22[i][j + 1] - self.threshold_angle) < 50):  # baraye inke zaviye akhar ham barresi shavad
+                            (abs(angle11[i][j + 1] - self.threshold_angle) < 40) and \
+                            (abs(angle22[i][j + 1] - self.threshold_angle) < 40):  # baraye inke zaviye akhar ham barresi shavad
                         cmp2 = cmp2 + 1                                                                                   
                     
                     j = j + 1
                     
-                if (len(angle11[i]) - cmp2) < ((50.0 * len(angle11[i])) / 100) and \
-                        (len(angle22[i]) - cmp2) < ((50.0 * len(angle22[i])) / 100): # yani dar suraT varede if mishavad k ekhtelafe cmp2 ba har goodcluster bayad kamtar az 40% an bashad
+                if (len(angle11[i]) - cmp2) < ((60.0 * len(angle11[i])) / 100) and \
+                        (len(angle22[i]) - cmp2) < ((60.0 * len(angle22[i])) / 100): # yani dar suraT varede if mishavad k ekhtelafe cmp2 ba har goodcluster bayad kamtar az 40% an bashad
                     togetherLegs.append(goodMarkersTogetherLegs[i])
                         
                 i = i + 1                    
@@ -768,7 +767,7 @@ class LegDetection(object):
                     i = 0
                     self.tedad = max(self.legsCount)
                 
-                    while self.tedad != self.legsCount[i]: #baraye bdast avardane indexe an clustere ya leg haye tashkhis dade shodeye ziaddd
+                    while self.tedad != self.legsCount[i]:  # baraye bdast avardane indexe an clustere ya leg haye tashkhis dade shodeye ziaddd
                         i += 1
                 
                     try:
@@ -798,9 +797,9 @@ class LegDetection(object):
                                 a = crowd_legs[index][0]
                                 b = crowd_legs[index][end]
                                 i1 = self.tmp_clusters[i][a][0]
-                                rad1 = ((i1 * self.laserResolution * pi) / 180) - (pi / 2)
+                                rad1 = ((i1 * self.laserResolution * pi) / 180) - pi
                                 i2 = self.tmp_clusters[i][b][end]
-                                rad2 = ((i2 * self.laserResolution * pi) / 180) - (pi / 2)
+                                rad2 = ((i2 * self.laserResolution * pi) / 180) - pi
                                 
                                 x1 = laser.ranges[i1] * numpy.cos(rad1)
                                 y1 = laser.ranges[i1] * numpy.sin(rad1)
