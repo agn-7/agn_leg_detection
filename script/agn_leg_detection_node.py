@@ -1,21 +1,17 @@
 #! /usr/bin/env python
-import sys
-import copy
-from math import *
-
-import numpy
-from numpy.ma.core import abs
-
 import rospy
-from ros import roslib
+import numpy
+
+from math import *
+from numpy.ma.core import abs
 
 from sensor_msgs.msg import *
 from std_msgs.msg import *
 from visualization_msgs.msg import *
 
-# from tilt_scan_srv.msg import tiltm #for test, and this is OK
 from agn_leg_detection.msg import *
-# from crowd_detector.srv import *
+
+__author__ = 'aGn'
 
 
 class Cluster(object):
@@ -26,7 +22,8 @@ class Cluster(object):
         self.end = end
         self.cloud = cloud
 
-    def distance(self):
+    @staticmethod
+    def distance():
         return 123
 
 
@@ -57,7 +54,6 @@ class LegDetection:
 
     laserResolution = 0.25
 
-    ##legPublishe = hashem()
     counter = 0
     legsCount = []
     countTry = 20
@@ -124,12 +120,12 @@ class LegDetection:
         m.id = id
         m.type = visualization_msgs.msg.Marker.SPHERE
 
-        if (is_start == True):
+        if is_start:
             m.color.r = 1.0
         else:
             m.color.g = 1.0
 
-        m.color.a = 1.0;
+        m.color.a = 1.0
 
         m.pose.position.x = x
         m.pose.position.y = y
@@ -252,26 +248,9 @@ class LegDetection:
 
         k = 0
         self.crowdSizer = []
-        size2 = []
         self.REAL_CROWD_SIZE = []
-        # print tmp_size2
 
-        # while k < len(crowd_legs) : #len(crowd_legs) ba len(tmp_size2) barabar ast
-        #   if len(crowd_legs[k]) % 2 == 0 :
-        #    size = int(len(crowd_legs[k]) / 2)
-        #  else:
-        #     size = int(len(crowd_legs[k]) / 2) + 1
-
-        # if size >= 4 and size <= 11 :
-        #    print "succesfull", size
-        #   self.crowdSizer = crowd_legs[k]  #ravashe sade k dar halathaE k paha joft bashanb Mkan bug ya eshtebah hast.
-
-        # if tmp_size2[k][len(tmp_size2[k]) - 1] >= 4 and tmp_size2[k][len(tmp_size2[k]) - 1] <= 11 :
-        #    self.RE[312,AL_CROWD_SIZE.append(tmp_size2[k][len(tmp_size2[k]) - 1])
-
-        # k += 1
         while k < len(crowd_legs):
-            # print "dakele while shodam" #this is ok
             if len(crowd_legs[k]) >= 4 and len(crowd_legs[k]) <= 11:
                 self.REAL_CROWD_SIZE.append(len(crowd_legs[k]))
                 self.crowdSizer = crowd_legs[k]  # nabayad b surate append bashad
